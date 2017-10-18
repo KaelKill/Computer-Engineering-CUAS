@@ -1,4 +1,4 @@
-/*
+
 #include <process.h>
 #include <windows.h>
 #include <conio.h>
@@ -81,4 +81,3 @@ void threadFunction3(void *pParam)
 		printf("\nThread 3 signaled");
 	}
 }
-*/

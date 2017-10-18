@@ -1,3 +1,11 @@
+/************************************
+Computer Engineering
+Homework Synchronizarion
+Solution for exercise 3
+
+Author: Kael Ricardo Kill
+************************************/
+
 #include <process.h>
 #include <windows.h>
 #include <conio.h>
@@ -12,7 +20,7 @@ HANDLE hSemaphore;
 HANDLE hEvent1, hEvent2, hEvent3, hEvent4;
 
 void main() {
-	
+
 	float nums[7]; // {x1,x2,x3,y1,y2,y3,y4}
 	char sel = 'y';
 
@@ -42,17 +50,18 @@ void main() {
 
 		WaitForSingleObject(hEvent4, INFINITE);
 
+		// Print results
 		printf("Y1 = %f\n", nums[3]);
 		printf("Y2 = %f\n", nums[4]);
 		printf("Y3 = %f\n", nums[5]);
 		printf("Y4 = %f\n", nums[6]);
-		
-		do{
+
+		do {
 			printf("Repeat? y/n\n");
 			sel = _getch();
-		}while((sel!= 'y') && (sel != 'Y') && (sel != 'n') && (sel != 'N'));
+		} while ((sel != 'y') && (sel != 'Y') && (sel != 'n') && (sel != 'N'));
 	} while ((sel != 'n') && (sel != 'N'));
-	
+
 }
 
 void thread1(void *pParam) {
@@ -64,15 +73,17 @@ void thread1(void *pParam) {
 		SetEvent(hEvent1);
 	}
 }
+
 void thread2(void *pParam) {
 	float *numsThread = (float*)pParam;
-	
+
 	while (true) {
 		WaitForSingleObject(hSemaphore, INFINITE);
 		numsThread[4] = (2 * numsThread[0] + 4 * numsThread[1]) / numsThread[1];
 		SetEvent(hEvent2);
 	}
 }
+
 void thread3(void *pParam) {
 	float *numsThread = (float*)pParam;
 	while (1) {
@@ -81,6 +92,7 @@ void thread3(void *pParam) {
 		SetEvent(hEvent3);
 	}
 }
+
 void thread4(void *pParam) {
 	float *numsThread = (float*)pParam;
 
