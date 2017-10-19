@@ -24,6 +24,8 @@ void main() {
 	float nums[7]; // {x1,x2,x3,y1,y2,y3,y4}
 	char sel = 'y';
 
+	unsigned long ulThreadHandle1, ulThreadHandle2, ulThreadHandle3, ulThreadHandle4;
+
 	// Create events and start threads:
 	hEvent1 = CreateEvent(NULL, FALSE, FALSE, NULL);
 	hEvent2 = CreateEvent(NULL, FALSE, FALSE, NULL);
@@ -31,10 +33,10 @@ void main() {
 	hEvent4 = CreateEvent(NULL, FALSE, FALSE, NULL);
 	hSemaphore = CreateSemaphore(NULL, 0, 3, NULL);
 
-	_beginthread(thread1, 0, (void*)nums);
-	_beginthread(thread2, 0, (void*)nums);
-	_beginthread(thread3, 0, (void*)nums);
-	_beginthread(thread4, 0, (void*)nums);
+	ulThreadHandle1 = _beginthread(thread1, 0, (void*)nums);
+	ulThreadHandle2 = _beginthread(thread2, 0, (void*)nums);
+	ulThreadHandle3 = _beginthread(thread3, 0, (void*)nums);
+	ulThreadHandle4 = _beginthread(thread4, 0, (void*)nums);
 
 	do {
 		// get numbers
@@ -62,6 +64,19 @@ void main() {
 		} while ((sel != 'y') && (sel != 'Y') && (sel != 'n') && (sel != 'N'));
 	} while ((sel != 'n') && (sel != 'N'));
 
+
+	TerminateThread((HANDLE)ulThreadHandle1, 0);
+	TerminateThread((HANDLE)ulThreadHandle2, 0);
+	TerminateThread((HANDLE)ulThreadHandle3, 0);
+	TerminateThread((HANDLE)ulThreadHandle4, 0);
+
+	CloseHandle(hEvent1);
+	CloseHandle(hEvent2);
+	CloseHandle(hEvent3);
+	CloseHandle(hEvent4);
+	CloseHandle(hSemaphore);
+
+	printf("Threads and events terminated...\n");
 }
 
 void thread1(void *pParam) {
