@@ -1,6 +1,6 @@
 /************************************
 Computer Engineering
-Homework Synchronizarion
+Homework Synchronization
 Solution for exercise 3
 
 Author: Kael Ricardo Kill
